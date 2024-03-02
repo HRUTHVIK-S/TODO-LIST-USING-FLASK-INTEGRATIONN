@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}HOME{% endblock title %}
+{% block body %}
+
+    <div class="container">
+        <form action='/' method='POST' class="mb-4">
+            <div class="mb-3">
+                <label for="title" class="form-label">TODO TITLE</label>
+                <input type="text" class="form-control" id="title" name='title' aria-describedby="emailHelp">
+            </div>
+            <div class="mb-3">
+                <label for="desc" class="form-label">Description</label>
+                <input type="text" class="form-control" id="desc" name='desc'>
+            </div>
+            <button type="submit" class="btn btn-primary btn-submit">Submit</button>
+        </form>
+
+        <h2 class="todo-list-header">
+            YOUR LIST!
+        </h2>
+
+        {% if allTodo|length==0 %}
+            <div class="alert alert-warning" role="alert">
+                YOUR TODO LIST IS EMPTY!!!<br>
+                PLEASE UPDATE THE LIST 😁
+            </div>
+        {% else %}
+            <table class="table table-bordered table-hover">
+                <thead class="table-primary">
+                    <tr>
+                        <th scope="col">S.no</th>
+                        <th scope="col">Title</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Time</th>
+                        <th scope="col">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for todo in allTodo %}
+                        <tr>
+                            <th scope="row">{{loop.index}}</th>
+                            <td>{{todo.title}}</td>
+                            <td>{{todo.desc}}</td>
+                            <td>{{todo.date_created}}</td>
+                            <td>
+                                <a href='/update/{{todo.sno}}' type="button" class="btn btn-success btn-sm mx-1">Update</a>
+                                <a href='/delete/{{todo.sno}}' type="button" class="btn btn-danger btn-sm mx-1">Delete</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+    </div>
+
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
+            text-align: center;
+            transition: box-shadow 0.3s ease-in-out;
+        }
+
+        .btn-submit {
+            transition: background-color 0.3s ease-in-out;
+        }
+
+        .btn-submit:hover {
+            background-color: #0056b3;
+        }
+
+        .todo-list-header {
+            margin-top: 30px;
+            font-size: 28px;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 20px;
+            border-collapse: collapse;
+            overflow: hidden;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 15px;
+            border-bottom: 1px solid #ddd;
+            text-align: center;
+        }
+
+        th {
+            background-color: #007BFF;
+            color: #fff;
+        }
+
+        tr:hover {
+            background-color: #e3f2fd;
+        }
+
+        .btn-success {
+            color: #fff;
+            background-color: #28a745;
+            border-color: #218838;
+        }
+
+        .btn-danger {
+            color: #fff;
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .alert-warning {
+            background-color: #ffeeba;
+            color: #856404;
+            border-color: #ffeeba;
+        }
+    </style>
+
+{% endblock body %}
